@@ -21,7 +21,14 @@ const abi = MyContractJSON.abi;
 
 MyContract = new web3.eth.Contract(abi, contractAddress);
 
-console.log('contract=='+contractAddress);
+//console.log('contract=='+contractAddress);
+
+let i=0;
+let channelname = "channelname"+i.toString();
+var channelid = web3.utils.fromAscii(channelname).toString();
+
+
+
 
 
 const init = () => {
@@ -180,8 +187,8 @@ const run = async ()=>{
 			const temp4 = await acceptBet();
             const { betStatus,adrss } = temp4;
             if(betStatus==false){client.destroy();}console.log('');
-			MyContract.methods.setPlayer2(adrss).send({from:adrss,gas:600000});
-			MyContract.methods.getplayersdetails().call().then(x=>{
+			MyContract.methods.joinChannel(channelid,adrss).send({from:adrss,gas:600000});
+			MyContract.methods.getplayersdetails(channelid.toString(),'0x00','0x0000000000000000000000000000000000000000000000000000000000000000','0x3000000000000000000000000000000000000000000000000000000000000000','0x00').call().then(x=>{
 				MyContract.methods.transferFrom(x._player2,contractAddress,x._betAmount.toString()).send({from:adrss,gas:600000})
 			})
 
@@ -196,9 +203,21 @@ const run = async ()=>{
 
 				if(data.toString()=='lost'){
                     
-                     
-                    MyContract.methods.getplayersdetails().call().then(x=>{
-                           	MyContract.methods.transferFrom(contractAddress,x._player1,(2*x._betAmount.toString())).send({from:x._player1,gas:60000});})
+                    
+                          
+                    MyContract.methods.getplayersdetails(channelid.toString(),'0x00','0x0000000000000000000000000000000000000000000000000000000000000000','0x3000000000000000000000000000000000000000000000000000000000000000','0x00').call().then(x=>{
+                    	console.log(x);
+                    //MyContract.methods.transferFrom(contractAddress,x._player1,(2*x._betAmount.toString())).send({from:x._player1,gas:60000});
+                   // web3.eth.sign('0x' + toHex('player2 lost'),x._player1).then(x=>{console.log('1=='+x);
+          
+                      web3.eth.sign('player 2 lost',x._player1).then(sig=>{
+
+                     MyContract.methods.closeChannel(channelid, sig,'player 2 lost').send({from:x._player1,gas:600000});
+
+
+                })
+                   // console.log('1=='+signature)
+                })
 
 
 					client.destroy();}
@@ -228,8 +247,7 @@ const run = async ()=>{
 		if(createGame==".Create"){console.log('Creating game...');
 			const temp5 = await createBet();
     		const {betAmount,betRound,betAdrs} = temp5;
-            
-            MyContract.methods.setPlayer1(betAdrs,betAmount,betRound).send({from:betAdrs,gas:600000});
+            MyContract.methods.createChannel(channelid,betAdrs,betAmount,betRound).send({from:betAdrs,gas:600000});
             MyContract.methods.transferFrom(betAdrs,contractAddress,betAmount).send({from:betAdrs,gas:600000});
       		
 
@@ -240,10 +258,20 @@ const run = async ()=>{
 	
 					socket.on('data',data=>{
         				if(data.toString()=='lost'){
-                           MyContract.methods.getplayersdetails().call().then(x=>{
+        					
+                           MyContract.methods.getplayersdetails(channelid.toString(),'0x00','0x0000000000000000000000000000000000000000000000000000000000000000','0x3000000000000000000000000000000000000000000000000000000000000000','0x00').call().then(x=>{
                            	
 
-                           	MyContract.methods.transferFrom(contractAddress,x._player2,(2*x._betAmount.toString())).send({from:x._player2,gas:600000});
+                           	//MyContract.methods.transferFrom(contractAddress,x._player2,(2*x._betAmount.toString())).send({from:x._player2,gas:600000});
+
+
+                           		   web3.eth.sign('player 1 lost',x._player2).then(sig=>{
+                        MyContract.methods.closeChannel(channelid, sig,'player 1 lost').send({from:x._player2,gas:600000});
+
+                    })
+
+
+
                            })
 
 

@@ -181,9 +181,9 @@
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "pragma solidity ^0.5.0;\n\ncontract ERC20Interface {\n    \n    function totalSupply() public view returns (uint);\n    function balanceOf(address tokenOwner) public view returns (uint balance);\n    function allowance(address tokenOwner, address spender) public view returns (uint remaining);\n    function transfer(address to, uint tokens) public returns (bool success);\n    function approve(address spender, uint tokens) public returns (bool success);\n    function transferFrom(address from, address to, uint tokens) public returns (bool success);\n\n    event Transfer(address indexed from, address indexed to, uint tokens);\n    event Approval(address indexed tokenOwner, address indexed spender, uint tokens);\n    \n}\n\ncontract quilhashCoin is ERC20Interface {\n    string public symbol;\n    string public  name;\n    uint8 public decimals;\n    uint _totalSupply;\n    address public owner;\n    \n    \n    \n    mapping(address => uint) balances;\n    mapping(address => mapping(address => uint)) allowed;\n    \n    constructor () public {\n        symbol = \"QTN\";\n        name = \"quilhashToken\";\n        decimals = 10;\n        _totalSupply = 1000000000 * 10**uint(decimals);\n        owner = msg.sender;\n        balances[owner] = _totalSupply;\n        emit Transfer(address(0), owner, _totalSupply);\n    }\n    \n    modifier onlyOwner {\n        require(msg.sender == owner);\n        _;\n    }\n    \n    function totalSupply() public view returns (uint) {\n        return _totalSupply - balances[address(0)];\n    }\n    \n    function balanceOf(address tokenOwner) public view returns (uint balance) {\n        return balances[tokenOwner];\n    }\n    \n    function transfer(address to, uint tokens) public onlyOwner returns (bool success) {\n        balances[msg.sender] = balances[msg.sender]-tokens;\n        balances[to] = balances[to]+tokens;\n        \n        emit Transfer(msg.sender, to, tokens);\n        return true;\n    }\n    \n    function approve(address spender, uint tokens) public returns (bool success) {\n        allowed[msg.sender][spender] = tokens;\n        \n        emit Approval(msg.sender, spender, tokens);\n        return true;\n    }\n    \n    function transferFrom(address from, address to, uint tokens) public returns (bool success) {\n   require(tokens<balances[from],\"Not enough balance for this transaction\");\n        balances[from] = balances[from]-tokens;\n        allowed[from][msg.sender] = allowed[from][msg.sender]-tokens;\n        balances[to] = balances[to]+tokens;\n        \n        \n        emit Transfer(from, to, tokens);\n        return true;\n    }\n    \n    function allowance(address tokenOwner, address spender) public view returns (uint remaining) {\n        return allowed[tokenOwner][spender];\n    }\n    \n}",
-  "sourcePath": "/home/an0n/Desktop/quilhash/tictac/contracts/quilhashCoin.sol",
+  "sourcePath": "/home/an0n/Desktop/quilhash/test1/tictac/contracts/quilhashCoin.sol",
   "ast": {
-    "absolutePath": "/home/an0n/Desktop/quilhash/tictac/contracts/quilhashCoin.sol",
+    "absolutePath": "/home/an0n/Desktop/quilhash/test1/tictac/contracts/quilhashCoin.sol",
     "exportedSymbols": {
       "ERC20Interface": [
         125
@@ -1638,7 +1638,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 491,
+                        "referencedDeclaration": 606,
                         "src": "1179:3:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -1929,7 +1929,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 491,
+                            "referencedDeclaration": 606,
                             "src": "1339:3:1",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -1983,10 +1983,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        494,
-                        495
+                        609,
+                        610
                       ],
-                      "referencedDeclaration": 494,
+                      "referencedDeclaration": 609,
                       "src": "1331:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -2384,7 +2384,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 491,
+                          "referencedDeclaration": 606,
                           "src": "1736:3:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -2453,7 +2453,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 491,
+                            "referencedDeclaration": 606,
                             "src": "1759:3:1",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -2660,7 +2660,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 491,
+                          "referencedDeclaration": 606,
                           "src": "1854:3:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -2944,7 +2944,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 491,
+                            "referencedDeclaration": 606,
                             "src": "2010:3:1",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -3038,7 +3038,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 491,
+                          "referencedDeclaration": 606,
                           "src": "2072:3:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -3378,10 +3378,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        494,
-                        495
+                        609,
+                        610
                       ],
-                      "referencedDeclaration": 495,
+                      "referencedDeclaration": 610,
                       "src": "2234:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -3597,7 +3597,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 491,
+                          "referencedDeclaration": 606,
                           "src": "2378:3:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -3693,7 +3693,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 491,
+                            "referencedDeclaration": 606,
                             "src": "2406:3:1",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -5177,7 +5177,7 @@
     "src": "0:2717:1"
   },
   "legacyAST": {
-    "absolutePath": "/home/an0n/Desktop/quilhash/tictac/contracts/quilhashCoin.sol",
+    "absolutePath": "/home/an0n/Desktop/quilhash/test1/tictac/contracts/quilhashCoin.sol",
     "exportedSymbols": {
       "ERC20Interface": [
         125
@@ -6632,7 +6632,7 @@
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 491,
+                        "referencedDeclaration": 606,
                         "src": "1179:3:1",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
@@ -6923,7 +6923,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 491,
+                            "referencedDeclaration": 606,
                             "src": "1339:3:1",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -6977,10 +6977,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        494,
-                        495
+                        609,
+                        610
                       ],
-                      "referencedDeclaration": 494,
+                      "referencedDeclaration": 609,
                       "src": "1331:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
@@ -7378,7 +7378,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 491,
+                          "referencedDeclaration": 606,
                           "src": "1736:3:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -7447,7 +7447,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 491,
+                            "referencedDeclaration": 606,
                             "src": "1759:3:1",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -7654,7 +7654,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 491,
+                          "referencedDeclaration": 606,
                           "src": "1854:3:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -7938,7 +7938,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 491,
+                            "referencedDeclaration": 606,
                             "src": "2010:3:1",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -8032,7 +8032,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 491,
+                          "referencedDeclaration": 606,
                           "src": "2072:3:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -8372,10 +8372,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        494,
-                        495
+                        609,
+                        610
                       ],
-                      "referencedDeclaration": 495,
+                      "referencedDeclaration": 610,
                       "src": "2234:7:1",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -8591,7 +8591,7 @@
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 491,
+                          "referencedDeclaration": 606,
                           "src": "2378:3:1",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
@@ -8687,7 +8687,7 @@
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 491,
+                            "referencedDeclaration": 606,
                             "src": "2406:3:1",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
@@ -10176,7 +10176,7 @@
   },
   "networks": {},
   "schemaVersion": "3.0.9",
-  "updatedAt": "2019-06-28T21:18:02.567Z",
+  "updatedAt": "2019-07-11T05:00:05.860Z",
   "devdoc": {
     "methods": {}
   },

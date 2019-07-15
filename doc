@@ -1,0 +1,12 @@
+(Open ganache or run private network with network id 5777 and rpc port 7545)
+1.open tictac folder and open terminal.
+2.type 'truffle migrate'.
+3.once contract is succesfully deployed open src folder and from the terminal enter 'node tictac'.Open one more terminal for the other player.
+4.if you have an account choose option 'Yes' otherwise 'No'.
+5.After enter the amount of tokens to buy.(before that make sure the account have minimum balance to call the function)
+6.from the first terminal create the game and enter the betAmont and wait for the other player to respond.
+7.From the other terminal join the game.
+ 
+
+Winner will get double of the betamount once the game is over. 
+
